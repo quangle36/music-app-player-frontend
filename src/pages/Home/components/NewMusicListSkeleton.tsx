@@ -9,13 +9,14 @@ import { SWIPER_NEW_MUSIC_BREAK_POINTS } from 'utils/constants'
 const NewMusicSkeletonList = () => {
   return (
     <Swiper
-      wrapperClass=" w-full h-full relative z-[1] transform "
+      className="w-full"
+      wrapperClass="flex mt-16"
       spaceBetween={10}
       breakpoints={SWIPER_NEW_MUSIC_BREAK_POINTS}
       modules={[Autoplay]}
-      loop={true}
+      // loop={true}
       autoplay={{
-        delay: 10000000,
+        delay: 2000,
         disableOnInteraction: false,
         pauseOnMouseEnter: true
       }}
@@ -28,8 +29,8 @@ const NewMusicSkeletonList = () => {
       </div>
       {[1, 2, 3, 4, 5, 6, 7, 9, 10].map((item) => (
         <SwiperSlide key={item}>
-          <div className="h-[150px] animate-pulse-opacity overflow-hidden rounded-lg bg-slate-500 object-cover md:h-[200px]">
-            <figure className="relative h-[150px] animate-pulse-opacity overflow-hidden bg-gradient-to-r from-app to-text-2 md:h-[200px]"></figure>
+          <div className="size-[200px] animate-pulse-opacity overflow-hidden rounded-lg bg-slate-500 object-cover ">
+            <figure className="size-[200px]animate-pulse-opacity relative overflow-hidden bg-gradient-to-r from-app to-text-2"></figure>
           </div>
         </SwiperSlide>
       ))}

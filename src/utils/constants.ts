@@ -1,12 +1,13 @@
 export const ACCESS_TOKEN = 'access_token'
-export const BASE_URL = 'https://api.chucknorris.io'
+export const BASE_URL = 'http://localhost:8000/api'
 export const SWIPER_NEW_MUSIC_BREAK_POINTS = {
   1: {
-    slidesPerView: 2,
-    spaceBetween: 2
+    slidesPerView: 1,
+    spaceBetween: 10
   },
   320: {
-    slidesPerView: 2
+    slidesPerView: 1,
+    spaceBetween: 10
   },
   480: {
     slidesPerView: 2
@@ -16,9 +17,11 @@ export const SWIPER_NEW_MUSIC_BREAK_POINTS = {
     spaceBetween: 10
   },
   1280: {
-    slidesPerView: 5
+    slidesPerView: 5,
+    spaceBetween: 10
   },
   1900: {
-    slidesPerView: 8
+    slidesPerView: 7,
+    spaceBetween: 10
   }
 }

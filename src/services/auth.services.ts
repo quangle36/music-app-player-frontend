@@ -26,19 +26,9 @@ export const authApi = apiSlice.injectEndpoints({
         url: '/auth/logout',
         method: 'POST'
       })
-    }),
-    fetchMusic: builder.query({
-      query: () => ({
-        url: '/music',
-        method: 'GET'
-      })
     })
   })
 })
 
-export const {
-  useLoginMutation,
-  useRegisterMutation,
-  useLogoutMutation,
-  useFetchMusicQuery
-} = authApi
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation } =
+  authApi
