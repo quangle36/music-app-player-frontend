@@ -51,14 +51,14 @@ const SidebarItem = ({ item }: SideBarItemProps): JSX.Element => {
 
 const AppSideBar = () => {
   return (
-    <div className="drawer-side">
+    <div className="drawer-side z-[50]">
       <label
         htmlFor="my-drawer-2"
         aria-label="close sidebar"
         className="drawer-overlay"
       ></label>
 
-      <ul className="menu min-h-full w-80 bg-transparent p-4 text-base-content">
+      <ul className="menu min-h-full w-80 bg-gradient-to-b from-slate-50 to-gray-200  p-4 text-base-content">
         {/* Sidebar content here */}
         <Logo />
         {sidebarItems.map((item, index) => (

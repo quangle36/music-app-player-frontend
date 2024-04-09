@@ -11,5 +11,16 @@ export default defineConfig({
     environment: 'happy-dom',
     setupFiles: '.vitest/setup',
     include: ['**/test.{ts,tsx}']
+  },
+  server: {
+    port: 3000,
+    proxy: {
+      '/images': {
+        target: 'https://res.cloudinary.com/duqsmyp5w/image/upload/v1712304689',
+        changeOrigin: true
+        // secure: false
+        // rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 })

@@ -6,7 +6,7 @@ const AppLayout = () => {
   return (
     <div className="drawer bg-gradient-to-b from-slate-50 to-gray-200 lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center justify-center">
+      <div className="drawer-content flex flex-col items-center p-9">
         {/* Page content here */}
         <Outlet />
         <label

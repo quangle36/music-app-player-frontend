@@ -16,10 +16,12 @@ const NewMusicList = () => {
   console.log('data', data)
   return (
     <Swiper
+      className="w-full"
+      wrapperClass="flex mt-16"
       spaceBetween={10}
       breakpoints={SWIPER_NEW_MUSIC_BREAK_POINTS}
       // modules={[Autoplay]}
-      loop={true}
+      // loop={true}
       autoplay={{
         delay: 2000,
         disableOnInteraction: false,
@@ -27,7 +29,7 @@ const NewMusicList = () => {
       }}
     >
       <div className="absolute left-0 top-0 flex w-full items-center">
-        <h1 className="text-xl lg:text-2xl">Mới cập nhật</h1>
+        <h1 className="text-2xl">Mới cập nhật</h1>
         <div className="mx-5 h-[4px] flex-1 border-y-[1px] border-text-1"></div>
         <SwiperActionInput type="prev" />
         <SwiperActionInput type="next" />
@@ -50,7 +52,7 @@ const NewMusicList = () => {
                 />
               )} */}
             </div>
-            <figure className="relative z-0 h-[150px] md:h-[200px]">
+            <figure className="relative z-0 size-[200px]">
               {/* {playListStore.list[playListStore.index]._id === song._id &&
                 playListStore.isPlay && (
                   <div
@@ -64,7 +66,7 @@ const NewMusicList = () => {
               <img
                 src={music.image}
                 alt=""
-                className="h-[150px] w-full rounded-lg object-cover md:h-[200px]"
+                className=" w-full rounded-lg object-cover"
               />
             </figure>
             {/* <div className="absolute right-1 top-2 z-30 opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100">
@@ -74,9 +76,8 @@ const NewMusicList = () => {
           {/* <h1 className="mt-1 line-clamp-2 px-1 text-sm lg:text-base">
             <Link to={`/bai-hat/${song.slug}`}>{song.title}</Link>
           </h1> */}
-          <span className="line-clamp-1 px-1 text-xs">{music.artists}</span>
-          <span className="line-clamp-1 px-1 text-xs">{music.title}</span>
-          <img src="files/1709177747810-bezkoder-hds.png" />
+          <span className="line-clamp-2 px-1 font-semibold">{music.title}</span>
+          <span className="line-clamp-1 px-1">{music.artists}</span>
         </SwiperSlide>
       ))}
     </Swiper>

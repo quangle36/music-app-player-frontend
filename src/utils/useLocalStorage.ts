@@ -1,11 +1,25 @@
-const useLocalStorage = {
-  getItem: (key: string) => {
-    const value = localStorage.getItem(key)
-    return value ? JSON.parse(value) : null
-  },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setItem: (key: string, value: any) => {
-    localStorage.setItem(key, JSON.stringify(value))
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Closure function
+export default function useLocalStorage(key: string) {
+  function getItem() {
+    return JSON.parse(localStorage.getItem(key) as any)
+  }
+  function setItem(data: any) {
+    localStorage.setItem(
+      key,
+      data instanceof Array || data instanceof Object
+        ? JSON.stringify(data)
+        : data
+    )
+
+    window.dispatchEvent(new Event('storage'))
+  }
+  function removeItem() {
+    localStorage.removeItem(key)
+  }
+  return {
+    getItem,
+    setItem,
+    removeItem
   }
 }
-export default useLocalStorage

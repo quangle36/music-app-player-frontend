@@ -4,11 +4,8 @@ import NewMusicList from './components/NewMusicList'
 
 const Home = () => {
   return (
-    <div className="relative size-full">
+    <div className="relative w-full overflow-hidden">
       <NewMusicList />
-      <img
-        src={`http://localhost:8000/api/files/1709177747810-bezkoder-hds.png`}
-      />
     </div>
   )
 }

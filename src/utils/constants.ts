@@ -25,3 +25,15 @@ export const SWIPER_NEW_MUSIC_BREAK_POINTS = {
     spaceBetween: 10
   }
 }
+
+export const SONG_DEFAULT = {
+  _id: 'default',
+  title: 'default',
+  artists: 'default',
+  slug: 'default',
+  image: '/banner.png',
+  src: '/anh-la-cua-em.mp3',
+  views: 0,
+  likes: 0,
+  genre: 'default'
+}

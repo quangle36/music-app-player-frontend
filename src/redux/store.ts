@@ -22,8 +22,6 @@ const authPersistConfig = {
 const persistedReducer = persistReducer(authPersistConfig, authReducer)
 export const store = configureStore({
   reducer: {
-    // todos: todoReducer,
-    // [jsonServerApi.reducerPath]: jsonServerApi.reducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: persistedReducer
   },
