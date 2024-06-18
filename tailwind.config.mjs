@@ -4,6 +4,14 @@ export default {
   content: ['./src/**/*.{mjs,js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      backgroundImage: {
+        sidebar:
+          'linear-gradient(180deg, rgba(15,17,29,1) 0%, rgba(15,30,59,1) 75%, rgba(29,47,83,1) 100%);',
+        content:
+          'linear-gradient(180deg, rgba(28,30,41,1) 0%, rgba(15,30,59,1) 50%, rgba(20,29,46,1) 100%);',
+        'transparent-white':
+          'linear-gradient(0deg, rgba(255,255,255,0.3743872549019608) 0%, rgba(255,255,255,0.2007177871148459) 100%);'
+      },
       colors: {
         app: '#0b1928',
         primary: '#111f35',

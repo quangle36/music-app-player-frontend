@@ -1,17 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Music } from 'interface/music.interface'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from 'classnames'
-import { DEFAULT_SONG_TIME, PLAY_LIST_HISTORY } from 'redux/constants'
+import { FiPlay, FiPause, FiSkipBack, FiSkipForward } from 'react-icons/fi'
+import { IoShuffleOutline, IoRepeatOutline } from 'react-icons/io5'
 import {
   incrementIndex,
   togglePlay,
   updateIndex
 } from 'redux/reducers/PlayListReducer'
 import { RootState } from 'redux/store'
-import { useLocalStorage } from 'utils'
 import ProgressBar from './ProgressBar'
+import AdjustVolume from './AdjustVolume'
+import SoundBadge from './SoundBadge'
+import { DEFAULT_SONG_TIME } from 'utils/constants'
 
 interface RefObject {
   handleUpdateProgressBar: (percent: number) => void
@@ -29,12 +31,13 @@ const ControlBar = () => {
   const randomList = useRef<Array<number>>([])
   const audioRef = useRef<HTMLAudioElement>(null)
   const progressBarRef = useRef<RefObject>(null)
-
+  // const totalDuration = convertSeconds(audioRef.current?.duration || 0)
+  // const currentDuration = convertSeconds(audioRef.current?.currentTime || 0)
   /**
    * Handle change song volume
    * @param {number} percent
    */
-  const handleUpdateVolume = (percent: number) => {
+  const handleChangeSongVolume = (percent: number) => {
     if (audioRef.current) {
       audioRef.current.volume = percent / 100
     }
@@ -45,53 +48,59 @@ const ControlBar = () => {
    * @param {number} offsetX
    * @param {number} clientWidth
    */
-  const handleChangeAudioProgress = (offsetX: number, clientWidth: number) => {
+  const handleChangeAudioProgress = (currentValue: number) => {
     if (audioRef.current) {
       const duration = audioRef.current.duration
-      audioRef.current.currentTime = (offsetX / clientWidth) * duration
+      audioRef.current.currentTime = (currentValue / 100) * duration
     }
   }
 
   /**
    * Handle play song with current index
    */
-
-  const handlePlayCurrentSong = () => {
+  const handlePlayCurrentSong = useCallback(() => {
     if (audioRef.current && progressBarRef.current) {
       progressBarRef.current.handleUpdateProgressBar(0)
       audioRef.current.children[0].setAttribute(
         'src',
         playlistStore.list[playlistStore.index].src
       )
+      audioRef.current.muted = false
       audioRef.current.load()
-      if (playlistStore.isPlay) {
-        audioRef.current.play()
-      }
+      audioRef.current.play()
     }
+  }, [playlistStore.index, playlistStore.list])
+
+  const handlePlayPauseSong = () => {
+    dispatch(togglePlay())
   }
 
   /**
    * Listen to add song to playlist
    */
-  useEffect(() => {
-    if (playlistStore.list) {
-      handlePlayCurrentSong()
-    }
-  }, [playlistStore.list])
+  // useEffect(() => {
+  //   if (playlistStore.list) {
+  //     handlePlayCurrentSong()
+  //   }
+  // }, [handlePlayCurrentSong, playlistStore.list])
 
   /**
    * Listen to play or pause song
    */
-  useEffect(() => {
-    playlistStore.isPlay ? audioRef.current?.play() : audioRef.current?.pause()
-  }, [playlistStore.isPlay])
+
+  // useEffect(() => {
+  //   playlistStore.isPlay ? audioRef.current?.play() : audioRef.current?.pause()
+  // }, [playlistStore.isPlay])
 
   /**
    * Listen to change song index
    */
   useEffect(() => {
-    handlePlayCurrentSong()
-  }, [playlistStore.index])
+    if (playlistStore.isPlay) {
+      return handlePlayCurrentSong()
+    }
+    audioRef.current?.pause()
+  }, [handlePlayCurrentSong, playlistStore.isPlay])
 
   /**
    * Handle play audio
@@ -99,34 +108,33 @@ const ControlBar = () => {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.onplaying = () => {
-        if (audioRef.current && audioRef.current.duration) {
-          const duration = audioRef.current.duration
-          const minutes = String(Math.floor(duration / 60)).padStart(2, '0')
-          const seconds = String(Math.floor(duration % 60)).padStart(2, '0')
-          setSongTime((prev) => ({
-            ...prev,
-            allTime: `${minutes}:${seconds}`
-          }))
-        }
-
+        // if (audioRef.current && audioRef.current.duration) {
+        //   const duration = audioRef.current.duration
+        //   const minutes = String(Math.floor(duration / 60)).padStart(2, '0')
+        //   const seconds = String(Math.floor(duration % 60)).padStart(2, '0')
+        //   setSongTime((prev) => ({
+        //     ...prev,
+        //     allTime: `${minutes}:${seconds}`
+        //   }))
+        // }
         //Get playlist history and save this song to local storage
-        const playlistHistoryStorage = useLocalStorage(PLAY_LIST_HISTORY)
-        const playlistHistory: Music[] = playlistHistoryStorage.getItem()
-        if (playlistHistory && playlistHistory.length) {
-          const isSongExisted = playlistHistory.some(
-            (song) => song._id === playlistStore.list[playlistStore.index]._id
-          )
-          if (!isSongExisted) {
-            playlistHistoryStorage.setItem([
-              ...playlistHistory,
-              playlistStore.list[playlistStore.index]
-            ])
-          }
-        } else {
-          playlistHistoryStorage.setItem([
-            playlistStore.list[playlistStore.index]
-          ])
-        }
+        // const playlistHistoryStorage = useLocalStorage(PLAY_LIST_HISTORY)
+        // const playlistHistory: Music[] = playlistHistoryStorage.getItem()
+        // if (playlistHistory && playlistHistory.length) {
+        //   const isSongExisted = playlistHistory.some(
+        //     (song) => song._id === playlistStore.list[playlistStore.index]._id
+        //   )
+        //   if (!isSongExisted) {
+        //     playlistHistoryStorage.setItem([
+        //       ...playlistHistory,
+        //       playlistStore.list[playlistStore.index]
+        //     ])
+        //   }
+        // } else {
+        //   playlistHistoryStorage.setItem([
+        //     playlistStore.list[playlistStore.index]
+        //   ])
+        // }
       }
 
       /**
@@ -134,10 +142,16 @@ const ControlBar = () => {
        */
       audioRef.current.ontimeupdate = () => {
         if (audioRef.current && progressBarRef.current) {
-          const currentTime = audioRef.current.currentTime
-          const duration = audioRef.current.duration
-          const minutes = String(Math.floor(currentTime / 60)).padStart(2, '0')
-          const seconds = String(Math.floor(currentTime % 60)).padStart(2, '0')
+          const currentTime = audioRef.current.currentTime || 0
+          const duration = audioRef.current.duration || 1
+          const minutes = String(Math.floor(currentTime / 60) || 0).padStart(
+            2,
+            '0'
+          )
+          const seconds = String(Math.floor(currentTime % 60) || 0).padStart(
+            2,
+            '0'
+          )
           setSongTime((prev) => ({
             ...prev,
             currentTime: `${minutes}:${seconds}`
@@ -194,19 +208,48 @@ const ControlBar = () => {
         }
       }
     }
-  }, [playlistStore])
+  }, [dispatch, playlistStore])
   return (
     <div
       className={classNames(
-        'h-[150px] md:h-[80px] w-full fixed bottom-0 left-0 bg-primary flex justify-center shadow shadow-text-2',
+        'h-[150px] md:h-[80px] w-full fixed bottom-0 left-0 bg-primary flex shadow shadow-text-2 z-[999] justify-around',
         { hidden: !playlistStore.isOpenControl }
       )}
-      style={{ zIndex: '999999' }}
     >
+      <audio autoPlay={false} muted ref={audioRef} className="hidden">
+        <source src="/" />
+      </audio>
+      <div className="flex w-[240px] items-center justify-around text-slate-300">
+        <FiSkipBack size={24} />
+        {playlistStore.isPlay ? (
+          <FiPause
+            size={24}
+            onClick={() => {
+              handlePlayPauseSong()
+            }}
+          />
+        ) : (
+          <FiPlay
+            size={24}
+            onClick={() => {
+              handlePlayPauseSong()
+            }}
+          />
+        )}
+        <FiSkipForward size={24} />
+        <IoShuffleOutline size={24} />
+        <IoRepeatOutline size={24} />
+      </div>
+      <div className="w-[50px] self-center text-white">
+        {songTime.currentTime}
+      </div>
       <ProgressBar
         ref={progressBarRef}
         handleChangeAudioProgress={handleChangeAudioProgress}
       />
+      <div className="w-[50px] self-center text-white">{songTime.allTime}</div>
+      <SoundBadge />
+      <AdjustVolume handleChangeSongVolume={handleChangeSongVolume} />
     </div>
   )
 }

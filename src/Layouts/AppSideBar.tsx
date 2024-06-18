@@ -5,7 +5,7 @@ import {
   IoLibraryOutline
 } from 'react-icons/io5'
 import { TbCategory } from 'react-icons/tb'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 interface SideBarItem {
   path: string
@@ -16,34 +16,39 @@ interface SideBarItem {
 const sidebarItems: SideBarItem[] = [
   {
     path: '/',
-    label: 'Trang chủ',
-    icon: <IoHomeOutline size={24} color="red" />
+    label: 'Home',
+    icon: <IoHomeOutline size={24} color="white" />
   },
   {
     path: '/categories',
-    label: 'Thể loại',
-    icon: <TbCategory size={24} color="red" />
+    label: 'Category',
+    icon: <TbCategory size={24} color="white" />
   },
   {
     path: '/songs',
-    label: 'Bài hát',
-    icon: <IoMusicalNotesOutline size={24} color="red" />
+    label: 'Songs',
+    icon: <IoMusicalNotesOutline size={24} color="white" />
   },
   {
     path: '/library',
-    label: 'Thư viện',
-    icon: <IoLibraryOutline size={24} color="red" />
+    label: 'Library',
+    icon: <IoLibraryOutline size={24} color="white" />
   }
 ]
 interface SideBarItemProps {
   item: SideBarItem
 }
 const SidebarItem = ({ item }: SideBarItemProps): JSX.Element => {
+  const location = useLocation()
+  const currentPath = location.pathname
+  const isActive = currentPath === item.path
   return (
     <li className="text-lg">
       <Link className="py-3" to={item.path}>
         {item.icon}
-        {item.label}
+        <p className={`${isActive ? 'text-white' : 'text-gray-400'}`}>
+          {item.label}
+        </p>
       </Link>
     </li>
   )
@@ -58,7 +63,7 @@ const AppSideBar = () => {
         className="drawer-overlay"
       ></label>
 
-      <ul className="menu min-h-full w-80 bg-gradient-to-b from-slate-50 to-gray-200  p-4 text-base-content">
+      <ul className="menu min-h-full w-80 bg-sidebar p-4 text-white">
         {/* Sidebar content here */}
         <Logo />
         {sidebarItems.map((item, index) => (

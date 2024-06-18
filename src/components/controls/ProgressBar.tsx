@@ -1,9 +1,15 @@
+import {
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack
+} from '@chakra-ui/react'
 import React, {
   useImperativeHandle,
   useRef,
-  MouseEvent,
   Ref,
-  forwardRef
+  forwardRef,
+  useState
 } from 'react'
 
 interface RefObject {
@@ -11,7 +17,7 @@ interface RefObject {
 }
 
 interface ProgressBarProps {
-  handleChangeAudioProgress: (offsetX: number, clientWidth: number) => void
+  handleChangeAudioProgress: (currentValue: number) => void
 }
 
 const ProgressBar = (
@@ -19,34 +25,32 @@ const ProgressBar = (
   ref: Ref<RefObject>
 ) => {
   const progressBarRef = useRef<HTMLDivElement>(null)
-  const progressAreaRef = useRef<HTMLDivElement>(null)
-
+  // const progressAreaRef = useRef<HTMLDivElement>(null)
+  const [currentValue, setCurrentValue] = useState(0)
   useImperativeHandle(ref, () => ({ handleUpdateProgressBar }))
   const handleUpdateProgressBar = (percent: number) => {
-    if (progressBarRef.current) {
-      progressBarRef.current.style.width = percent + '%'
-    }
+    setCurrentValue(percent)
   }
 
-  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (progressAreaRef.current) {
-      handleChangeAudioProgress(
-        e.nativeEvent.offsetX,
-        progressAreaRef.current.clientWidth
-      )
-    }
+  const handleOnChangeSongProgress = (e: number) => {
+    setCurrentValue(e)
+    handleChangeAudioProgress(e)
   }
   return (
-    <div
-      ref={progressAreaRef}
-      onClick={handleClick}
-      className="progress-area absolute -top-1 left-0 z-30 h-2 w-full flex-1 cursor-pointer rounded-lg bg-text-2 lg:-top-2"
+    <Slider
+      onChange={handleOnChangeSongProgress}
+      aria-label="slider-ex-2"
+      colorScheme="pink"
+      value={currentValue}
+      defaultValue={0}
+      ref={progressBarRef}
+      width={'40%'}
     >
-      <div
-        ref={progressBarRef}
-        className="progress-bar h-full w-0 rounded-lg bg-gradient-to-r from-[rgb(255,85,62)] to-[rgb(255,0,101)]"
-      ></div>
-    </div>
+      <SliderTrack>
+        <SliderFilledTrack />
+      </SliderTrack>
+      <SliderThumb />
+    </Slider>
   )
 }
 

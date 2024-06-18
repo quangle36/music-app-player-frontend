@@ -20,6 +20,12 @@ export default defineConfig({
         changeOrigin: true
         // secure: false
         // rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/musics': {
+        target: 'https://res.cloudinary.com/duqsmyp5w/video/upload/v1712305099',
+        changeOrigin: true
+        // secure: false
+        // rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   }

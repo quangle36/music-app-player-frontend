@@ -12,8 +12,9 @@ import {
 import storageSession from 'redux-persist/lib/storage/session'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import apiSlice from './apiSlice'
-import authReducer from 'pages/Login/authSlice'
+import authReducer from 'redux/reducers/authReducer'
 import { configureStore } from '@reduxjs/toolkit'
+import PlayListReducer from './reducers/PlayListReducer'
 
 const authPersistConfig = {
   key: 'auth',
@@ -23,7 +24,8 @@ const persistedReducer = persistReducer(authPersistConfig, authReducer)
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
-    auth: persistedReducer
+    auth: persistedReducer,
+    playlist: PlayListReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

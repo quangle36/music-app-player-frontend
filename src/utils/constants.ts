@@ -1,13 +1,17 @@
+// localStorage
+export const PLAY_LIST_HISTORY = 'PLAY_LIST_HISTORY'
 export const ACCESS_TOKEN = 'access_token'
+
 export const BASE_URL = 'http://localhost:8000/api'
+
+export const DEFAULT_SONG_TIME = { currentTime: '00:00', allTime: '00:00' }
 export const SWIPER_NEW_MUSIC_BREAK_POINTS = {
   1: {
-    slidesPerView: 1,
-    spaceBetween: 10
+    slidesPerView: 2,
+    spaceBetween: 2
   },
   320: {
-    slidesPerView: 1,
-    spaceBetween: 10
+    slidesPerView: 2
   },
   480: {
     slidesPerView: 2
@@ -17,12 +21,10 @@ export const SWIPER_NEW_MUSIC_BREAK_POINTS = {
     spaceBetween: 10
   },
   1280: {
-    slidesPerView: 5,
-    spaceBetween: 10
+    slidesPerView: 5
   },
   1900: {
-    slidesPerView: 7,
-    spaceBetween: 10
+    slidesPerView: 8
   }
 }
 
@@ -37,3 +39,5 @@ export const SONG_DEFAULT = {
   likes: 0,
   genre: 'default'
 }
+
+export const DEFAULT_VOLUME = 100

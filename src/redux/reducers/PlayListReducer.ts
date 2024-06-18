@@ -1,13 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Music } from 'interface/music.interface'
-import { PLAY_LIST_HISTORY } from 'redux/constants'
 import { useLocalStorage } from 'utils'
-import { SONG_DEFAULT } from 'utils/constants'
+import { PLAY_LIST_HISTORY, SONG_DEFAULT } from 'utils/constants'
 
 const playListHistoryStorage = useLocalStorage(PLAY_LIST_HISTORY)
 const playlistHistory = playListHistoryStorage.getItem()
-
 export interface IPlayListReducer {
   list: Music[]
   isOpenControl: boolean
@@ -16,6 +14,7 @@ export interface IPlayListReducer {
   isRepeat: boolean
   isOpenPlayListModal: boolean
   isRandom: boolean
+  currentVolume: number
 }
 const initialState: IPlayListReducer = {
   list:
@@ -27,7 +26,8 @@ const initialState: IPlayListReducer = {
   index: 0,
   isRepeat: false,
   isOpenPlayListModal: false,
-  isRandom: false
+  isRandom: false,
+  currentVolume: 0
 }
 
 export const playListSlice = createSlice({
@@ -69,13 +69,16 @@ export const playListSlice = createSlice({
     },
     addSongToPlayList: (
       state,
-      action: PayloadAction<{ songs: Music[]; isOpenPlayListModal: boolean }>
+      action: PayloadAction<{ songs: Music[]; isOpenPlayListModal?: boolean }>
     ) => {
       state.list = action.payload.songs
       state.isOpenControl = true
       state.isPlay = true
-      state.isOpenPlayListModal = action.payload.isOpenPlayListModal
+      state.isOpenPlayListModal = action.payload.isOpenPlayListModal || false
       state.index = 0
+    },
+    updateCurrentVolume: (state, action: PayloadAction<{ volume: number }>) => {
+      state.currentVolume = action.payload.volume
     }
   }
 })
@@ -90,7 +93,8 @@ export const {
   incrementIndex,
   decrementIndex,
   addSongToPlayList,
-  updateIsOpenPlayPlaylistModal
+  updateIsOpenPlayPlaylistModal,
+  updateCurrentVolume
 } = playListSlice.actions
 
 export default playListSlice.reducer

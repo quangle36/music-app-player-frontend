@@ -1,6 +1,6 @@
 // import AppLayout from 'layouts/ProtectedLayout'
 // import RequireAuth from 'layouts/RequireAuth'
-import AppLayout from 'Layouts/AppLayout'
+import AppLayout from 'layouts/AppLayout'
 import Categories from 'pages/Categories'
 import Home from 'pages/Home'
 // import CardDetail from 'pages/Detail/components/CardDetail'
