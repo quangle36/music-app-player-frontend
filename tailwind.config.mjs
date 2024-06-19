@@ -10,7 +10,7 @@ export default {
         content:
           'linear-gradient(180deg, rgba(28,30,41,1) 0%, rgba(15,30,59,1) 50%, rgba(20,29,46,1) 100%);',
         'transparent-white':
-          'linear-gradient(0deg, rgba(255,255,255,0.3743872549019608) 0%, rgba(255,255,255,0.2007177871148459) 100%);'
+          'linear-gradient(180deg, rgba(142,133,199,0.9) 0%, rgba(182,189,93,0) 50%, rgba(142,133,199,0.9) 100%);'
       },
       colors: {
         app: '#0b1928',
