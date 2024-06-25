@@ -32,7 +32,7 @@ const NewMusicList = () => {
   return (
     <>
       <Swiper
-        className="w-full"
+        className="w-full text-white"
         wrapperClass="flex mt-16"
         spaceBetween={10}
         breakpoints={SWIPER_NEW_MUSIC_BREAK_POINTS}

@@ -9,11 +9,10 @@ import Genre from './components/Genre'
 const Home = () => {
   return (
     <div className="relative w-full overflow-hidden">
-      {/* <NewMusicList /> */}
+      <NewMusicList />
       <TrendingNewAlbums />
       <div className="flex w-full justify-center">
         <NewChart />
-
         <div>
           <TrendingArtist />
           <Genre />

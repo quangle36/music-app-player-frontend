@@ -21,10 +21,16 @@ export const SWIPER_NEW_MUSIC_BREAK_POINTS = {
     spaceBetween: 10
   },
   1280: {
-    slidesPerView: 5
+    slidesPerView: 5,
+    spaceBetween: 10
+  },
+  1768: {
+    slidePerView: 6,
+    spaceBetween: 10
   },
   1900: {
-    slidesPerView: 8
+    slidesPerView: 4,
+    spaceBetween: 10
   }
 }
 
